@@ -13,6 +13,11 @@ import ProductAdd from './page/ProductAdd';
 import axios from 'axios';
 import ProductEdit from './page/ProductEdit';
 import PrivateRoute from './page/PrivateRoute';
+import Signin from './page/Signin';
+import Signup from './page/Signup';
+import { isAuthenticate } from './utils/localstorage';
+
+const {token, user} = isAuthenticate()
 
 function App() {
   const  [products, setProducts] = useState<ProductType[]>([])
@@ -28,9 +33,13 @@ function App() {
   }, [])
 
   const onHandleAdd = async (product: ProductType) => {
-    const {data} = await axios.get(
-      `https://o1d4ks.sse.codesandbox.io/products`,
-    );
+    await axios.post(
+      `http://localhost:8000/api/products/${user._id}`, product, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+      }
+    )
     setProducts([...products, product]);
   }
 
@@ -52,10 +61,11 @@ function App() {
     <div className="App">
       <main>
         <Routes>
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<WebsiteLayout />}>
             <Route index element={<Homepage />} />
             <Route path="product/:id" element={<ProductPage />} />
-            <Route path="login" element={<h2>Login</h2>} />
           </Route>
           <Route path="admin" element={<PrivateRoute><AdminLayout /></PrivateRoute>}>
             <Route index element={<Navigate to="/admin/dashboard" />} />
