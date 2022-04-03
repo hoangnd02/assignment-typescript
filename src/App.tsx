@@ -5,7 +5,6 @@ import Homepage from './page/Homepage';
 import ProductPage from './page/ProductPage';
 import AdminLayout from './page/layouts/AdminLayout';
 import WebsiteLayout from './page/layouts/WebsiteLayout';
-import Dashboard from './page/Dashboard';
 import { ProductType } from './types/Product';
 import ProductAdd from './page/admin/product/ProductAdd';
 import ProductEdit from './page/admin/product/ProductEdit';
@@ -21,10 +20,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './app/rootReducer';
 import { getCategories } from './features/category/categorySlice';
 import CategoryEdit from './page/admin/category/CategoryEdit';
-import {deleteProduct} from "./features/product/productSlice"
 import CategoryAdd from './page/admin/category/CategoryAdd';
 import { getCart } from './features/cart/cartSlice';
 import SearchPage from './page/SearchPage';
+import Dashboard from './page/admin';
 
 function App() {
   const productsApi = useSelector((state: RootState) => state.products.value)

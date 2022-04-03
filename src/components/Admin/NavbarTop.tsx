@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 type Props = {}
 
@@ -33,9 +34,9 @@ const NavbarTop = (props: Props) => {
           <ul className="flex items-center flex-shrink-0 space-x-6">
             <li className="relative">
               <span className="inline-block overflow-hidden">
-                <a href="/" className="text-black">
+                <Link to="/" className="text-black">
                   Home Page
-                </a>
+                </Link>
               </span>
             </li>
           </ul>

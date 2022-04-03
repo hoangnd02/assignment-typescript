@@ -26,7 +26,6 @@ const Header = (props: Props) => {
               <div className="hidden lg:ml-8 lg:block lg:self-stretch">
                 <div className="h-full flex space-x-8">
                   <Link to="/admin" className="flex items-center text-sm font-medium text-white hover:text-white">Admin</Link>
-                  <Link to="/news" className="flex items-center text-sm font-medium text-white hover:text-white">News</Link>
                 </div>
               </div>
 
