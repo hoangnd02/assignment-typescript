@@ -1,79 +1,84 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react'
-import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
-import './App.css'
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Homepage from './page/Homepage';
-
 import ProductPage from './page/ProductPage';
 import AdminLayout from './page/layouts/AdminLayout';
 import WebsiteLayout from './page/layouts/WebsiteLayout';
 import Dashboard from './page/Dashboard';
-import ProductManager from './page/ProductManager';
 import { ProductType } from './types/Product';
-import ProductAdd from './page/ProductAdd';
-import axios from 'axios';
-import ProductEdit from './page/ProductEdit';
+import ProductAdd from './page/admin/product/ProductAdd';
+import ProductEdit from './page/admin/product/ProductEdit';
 import PrivateRoute from './page/PrivateRoute';
 import Signin from './page/Signin';
 import Signup from './page/Signup';
 import { isAuthenticate } from './utils/localstorage';
-
-const {token, user} = isAuthenticate()
+import CartPage from './page/CartPage';
+import ProductManager from './page/admin/product/ProductManager';
+import CategoryManager from './page/admin/category/CategoryManager';
+import { getProducts } from './features/product/productSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from './app/rootReducer';
+import { getCategories } from './features/category/categorySlice';
+import CategoryEdit from './page/admin/category/CategoryEdit';
+import {deleteProduct} from "./features/product/productSlice"
+import CategoryAdd from './page/admin/category/CategoryAdd';
+import { getCart } from './features/cart/cartSlice';
+import SearchPage from './page/SearchPage';
 
 function App() {
-  const  [products, setProducts] = useState<ProductType[]>([])
+  const productsApi = useSelector((state: RootState) => state.products.value)
+  const [ products, setProducts ] = useState<ProductType[]>(productsApi)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    const getProducts = async () => {
-      const {data} = await axios.get(
-        `https://o1d4ks.sse.codesandbox.io/products`,
-      );
-      setProducts(data);
-    }
-    getProducts()
+    dispatch(getProducts())
+    dispatch(getCategories())
+    dispatch(getCart())
   }, [])
-
+  
   const onHandleAdd = async (product: ProductType) => {
-    await axios.post(
-      `http://localhost:8000/api/products/${user._id}`, product, {
-        headers: {
-            "Authorization": `Bearer ${token}`
-        }
+    try {
+      if(localStorage.getItem('user')) {
+        const {token, user} = isAuthenticate()
+        await axios.post(
+          `http://localhost:8000/api/products/${user._id}`, product, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+          }
+        )
+        setProducts([...products, product]);
       }
-    )
-    setProducts([...products, product]);
-  }
-
-  const onHandleEdit = async (product: ProductType) => {
-    const {data} = await axios.put(
-      `https://o1d4ks.sse.codesandbox.io/products/${product.id}`, product
-    );
-    setProducts(products.map(prod => prod.id === data.id ? data : prod));
-  }
-
-  const onHandleDelete = async (id: number) => {
-    const {data} = await axios.delete(
-      `https://o1d4ks.sse.codesandbox.io/products/${id}`
-    );
-    setProducts(products.filter(product => product.id !== id));
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
     <div className="App">
       <main>
         <Routes>
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<WebsiteLayout />}>
+            <Route path="signin" element={<Signin />} />
+            <Route path="signup" element={<Signup />} />
+            <Route path="search" element={<SearchPage />} />
+            <Route path="cart" element={<CartPage />} />
             <Route index element={<Homepage />} />
             <Route path="product/:id" element={<ProductPage />} />
           </Route>
           <Route path="admin" element={<PrivateRoute><AdminLayout /></PrivateRoute>}>
             <Route index element={<Navigate to="/admin/dashboard" />} />
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="product" >
-              <Route index element={<ProductManager products={products} onDelete={onHandleDelete}/>} />
+            <Route path="category">
+              <Route index element={<CategoryManager/>} />
+              <Route path="add" element={<CategoryAdd />} />
+              <Route path="edit/:id" element={<CategoryEdit />} />
+            </Route>
+            <Route path="product">
+              <Route index element={<ProductManager products={products}/>} />
               <Route path="add" element={<ProductAdd onAdd={onHandleAdd}/>} />
-              <Route path="edit/:id" element={<ProductEdit onUpdate={onHandleEdit}/>} />
+              <Route path="edit/:id" element={<ProductEdit/>} />
             </Route>
           </Route>
         </Routes>

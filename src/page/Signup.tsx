@@ -1,6 +1,9 @@
 import axios from 'axios'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
+import { login } from '../features/user/userSlice'
+import { authenticated } from '../utils/localstorage'
 
 type Props = {}
 type SignupType = {
@@ -12,13 +15,16 @@ type SignupType = {
 const Signup = (props: Props) => {
   const { register, handleSubmit, formState: {errors} } = useForm<SignupType>()
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
     const onSubmit: SubmitHandler<SignupType> = async (dataInput) => {
-      console.log(dataInput)
       try {
         const {data} = await axios.post("http://localhost:8000/api/signup", dataInput)
         console.log(data)
-        navigate("/")
+        authenticated(data, () => {
+          dispatch(login(data))
+          navigate("/")
+        })
       } catch (error) {
         console.log(error)        
       }

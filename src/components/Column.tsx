@@ -5,7 +5,7 @@ type Props = {
 }
 
 const Column = (props: Props) => {
-  console.log(props)
+  // console.log(props)
   const renderColumn = (type: string) => {
     switch (type) {
       case "text": {

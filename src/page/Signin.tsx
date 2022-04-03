@@ -1,7 +1,8 @@
 import axios from 'axios'
-import React from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
+import { login } from '../features/user/userSlice'
 import { authenticated } from '../utils/localstorage'
 
 type Props = {}
@@ -12,16 +13,22 @@ type SigninType = {
 }
 
 const Signin = (props: Props) => {
-    const { register, handleSubmit, formState: {errors} } = useForm<SigninType>()
-    const navigate = useNavigate();
+  const { register, handleSubmit, formState: {errors} } = useForm<SigninType>()
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
 
-    const onSubmit: SubmitHandler<SigninType> = async (dataInput) => {
-      console.log(dataInput)
+  const onSubmit: SubmitHandler<SigninType> = async (dataInput) => {
+    try {
       const {data} = await axios.post("http://localhost:8000/api/signin", dataInput)
       authenticated(data, () => {
-        navigate("/signin")
+        dispatch(login(data))
+        navigate("/")
       })
-    } 
+    } catch (error) {
+      console.log(error)        
+    }
+  } 
+  
   return (
     <div className="min-h-full bg-[url('https://random.imagecdn.app/1400/800')] flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8">
       <div className="p-10 rounded bg-[#fff] shadow max-w-[540px] w-full space-y-8">
@@ -35,7 +42,6 @@ const Signin = (props: Props) => {
             </a>
           </p>
         </div>
-
         <form onSubmit={handleSubmit(onSubmit)}> 
           <div className="px-4 py-2 bg-white space-y-6 sm:p-6">
             <div className="grid grid-cols-3 gap-6">

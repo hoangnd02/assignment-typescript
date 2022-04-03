@@ -1,5 +1,8 @@
-export type User = {
-    _id: string,
-    email: string,
-    role: number,
+export type UserType = {
+    token: string;
+    user: {
+        _id: string,
+        email: string,
+        role: number,
+    }
 }

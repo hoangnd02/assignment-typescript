@@ -1,4 +1,4 @@
-import React from 'react'
+import { Link } from 'react-router-dom';
 
 type Props = {}
 
@@ -115,14 +115,14 @@ const NavbarLeft = (props: Props) => {
   return (
     <div className="z-20 hidden w-60 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
       <div className="py-4 text-gray-500 dark:text-gray-400">
-        <a href="#" className="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200">
+        <Link to={"/"} className="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200">
           Admin
-        </a>
+        </Link>
         <ul className="mt-6">
           <li className="relative px-6 py-3">
-            <a
+            <Link
               className="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-              href="/admin"
+              to={'/admin'}
             >
               <svg
                 className="w-5 h-5"
@@ -139,14 +139,14 @@ const NavbarLeft = (props: Props) => {
                 ></path>
               </svg>
               <span className="ml-4">Dashboard</span>
-            </a>
+            </Link>
           </li>
         </ul>
         <ul>
           <li className="relative px-6 py-3">
-            <a
+            <Link
               className="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-              href="/admin/users"
+              to={"/admin/users"}
             >
               <svg
                 className="w-5 h-5"
@@ -163,12 +163,12 @@ const NavbarLeft = (props: Props) => {
                 ></path>
               </svg>
               <span className="ml-4">Users</span>
-            </a>
+            </Link>
           </li>
           <li className="relative px-6 py-3">
-            <a
+            <Link
               className="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-              href="/admin/categories"
+              to={"/admin/category"}
             >
               <svg
                 className="w-5 h-5"
@@ -185,12 +185,12 @@ const NavbarLeft = (props: Props) => {
                 ></path>
               </svg>
               <span className="ml-4">Categories</span>
-            </a>
+            </Link>
           </li>
           <li className="relative px-6 py-3">
-            <a
+            <Link
               className="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-              href="/admin/products"
+              to={"/admin/product"}
             >
               <svg
                 className="w-5 h-5"
@@ -207,7 +207,7 @@ const NavbarLeft = (props: Props) => {
                 ></path>
               </svg>
               <span className="ml-4">Products</span>
-            </a>
+            </Link>
           </li>
         </ul>
       </div>

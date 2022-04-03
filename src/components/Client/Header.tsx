@@ -1,8 +1,13 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { RootState } from '../../app/rootReducer'
 
 type Props = {}
 
 const Header = (props: Props) => {
+  const user = useSelector((state: RootState) => state.user)
+
   return (
     <div>
       <header className="relative bg-[#2874f0] z-20">
@@ -11,17 +16,17 @@ const Header = (props: Props) => {
             <div className="h-16 flex items-center">
               {/* <!-- Logo --> */}
               <div className="ml-4 flex lg:ml-0">
-                <a href="/#">
+                <Link to="/">
                   <span className="sr-only">Workflow</span>
                   <img className="h-8 w-auto" src="https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/flipkart-plus_8d85f4.png" alt=""/>
-                </a>
+                </Link>
               </div>
 
               {/* <!-- Flyout menus --> */}
               <div className="hidden lg:ml-8 lg:block lg:self-stretch">
                 <div className="h-full flex space-x-8">
-                  <a href="/admin" className="flex items-center text-sm font-medium text-white hover:text-white">Admin</a>
-                  <a href="/news" className="flex items-center text-sm font-medium text-white hover:text-white">News</a>
+                  <Link to="/admin" className="flex items-center text-sm font-medium text-white hover:text-white">Admin</Link>
+                  <Link to="/news" className="flex items-center text-sm font-medium text-white hover:text-white">News</Link>
                 </div>
               </div>
 
@@ -35,16 +40,27 @@ const Header = (props: Props) => {
                     </svg>
                   </button>
                 </form>
+                {user.value ?
+                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                  <div id="account-email" className="text-sm font-medium text-white">{user.value?.email}</div>
+                  <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
+                  <div id="logout" className="text-sm font-medium text-white">Logout</div>
+                </div> : 
+                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                  <Link to="/signin" className="text-sm font-medium text-white">Sign in</Link>
+                  <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
+                  <Link to="/signup" className="text-sm font-medium text-white">Create account</Link>
+                </div>}
 
                 {/* <!-- Cart --> */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <a href="#/cart" className="group -m-2 p-2 flex items-center">
+                  <Link to="/cart" className="group -m-2 p-2 flex items-center">
                     <svg className="text-white flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
                     <span className="count-cart ml-2 text-sm font-medium text-white">0</span>
                     <span className="sr-only">items in cart, view bag</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

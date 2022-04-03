@@ -1,6 +1,9 @@
-import { User } from '../types/User'
+import { useDispatch } from 'react-redux'
+import { UserType } from '../types/User'
+import { login } from "../features/user/userSlice"
 
-export const authenticated = (user: User, next: () => void) => {
+
+export const authenticated = (user: UserType, next: () => void) => {
     localStorage.setItem('user', JSON.stringify(user))
     next()
 }
