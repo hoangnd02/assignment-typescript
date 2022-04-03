@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
+import { RootState } from '../app/rootReducer'
 import { authenticated } from '../utils/localstorage'
 
 
@@ -8,6 +10,7 @@ type Props = {}
 
 const CartPage = (props: Props) => {
   const { register, handleSubmit, formState: {errors} } = useForm<any>()
+  const products = useSelector((state: RootState) => state.cart.value)
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<any> = async (dataInput) => {
@@ -17,6 +20,7 @@ const CartPage = (props: Props) => {
       console.log(error)        
     }
   } 
+  console.log(products);
   return (
     <div className="container mx-auto mt-10">
     <div className="flex my-10">
@@ -31,7 +35,38 @@ const CartPage = (props: Props) => {
           <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Total</h3>
         </div>
         <div className="list-products">
-          
+        {products.map((product) => 
+          <div>
+            <div className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
+              <div className="flex w-2/5">
+                <div className="w-24">
+                  <img src={product.product.image}/>
+                </div>
+                <div className="flex flex-col justify-center ml-4 flex-grow">
+                  <span className="text-gray-600 font-bold text-base text-center justify-center">
+                    {product.product.name}
+                  </span>
+                </div>
+              </div>
+              <div id="action" className="flex justify-center w-1/5">
+                <svg className="fill-current text-gray-600 w-3" viewBox="0 0 448 512"><path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" /></svg>
+                <input value={product.quantity} className="mx-2 text-center w-12" type="text" defaultValue="1"/>
+                <svg className="fill-current text-gray-600 w-3" viewBox="0 0 448 512">
+                  <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+                </svg>
+              </div>
+              <span className="text-center w-1/5 font-semibold text-sm">
+                {product.product.price}
+              </span>
+              <span className="text-center w-1/5 font-semibold text-sm">
+                {+product.product.price * product.quantity}
+                </span>
+            </div>
+            <span data-id="${product.id}" id="del_btn">Remove</span>
+          </div>
+        )}       
+
+    
         </div>
         <a href="#" className="flex font-semibold text-indigo-600 text-base mt-10">
           Continue Shopping
@@ -83,9 +118,9 @@ const CartPage = (props: Props) => {
             <span>Total cost</span>
             <span id="total_price" />
           </div>
-          ${'{'}Button.print("Check out"){'}'}
+          $Button.print("Check out")
         </div>
-        `){'}'}
+        `)
       </div>
     </div>
   </div>)

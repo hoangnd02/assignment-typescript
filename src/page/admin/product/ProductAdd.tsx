@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { addProduct } from '../../../features/product/productSlice';
 import { ProductType } from '../../../types/Product';
 import { isAuthenticate } from '../../../utils/localstorage';
-
+import { ToastContainer, toast } from 'react-toastify';
 
 type ProductAddProps = {
   onAdd: (product: ProductType) => void
@@ -16,6 +16,8 @@ const ProductAdd = (props: ProductAddProps) => {
   const navigate = useNavigate()
 
   const dispatch = useDispatch()
+
+  const notify = () => toast("Successfully");
 
   const onSubmit: SubmitHandler<ProductType> = async (dataInput) => {
     if(localStorage.getItem('user')) {
@@ -28,6 +30,7 @@ const ProductAdd = (props: ProductAddProps) => {
         }
       )
       dispatch(addProduct(data));
+      notify()
       navigate("/admin/product");
     }
   } 

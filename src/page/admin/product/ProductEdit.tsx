@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ProductType } from '../../../types/Product';
 import { editProduct } from '../../../features/product/productSlice'
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
  
 type Props = {}
 
@@ -14,11 +15,13 @@ const ProductEdit = (props: Props) => {
   const navigate = useNavigate()
   const {id} = useParams()
   const dispatch = useDispatch()
+  const notify = () => toast("Successfully");
 
   const onSubmit: SubmitHandler<ProductType> = async (dataInput) => {
     try {
       const { data } = await axios.patch(`http://localhost:8000/api/product/${id}`, dataInput)
       dispatch(editProduct(data))
+      notify()
       navigate("/admin/product");
     } catch (error) {
       console.log(error)
@@ -49,6 +52,12 @@ const ProductEdit = (props: Props) => {
             </div>
             <div className="grid grid-cols-3 gap-6">
               <div className="col-span-3 sm:col-span-3">
+                <label className="block text-sm font-medium text-gray-700">Category</label>
+                <input type="text" {...register("category")} placeholder=""  className="py-2 px-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"/>
+              </div>
+            </div>
+            <div className="grid grid-cols-3 gap-6">
+              <div className="col-span-3 sm:col-span-3">
                 <label className="block text-sm font-medium text-gray-700">Price</label>
                 <input type="number" {...register("price")} placeholder=""  className="py-2 px-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"/>
               </div>
@@ -56,7 +65,7 @@ const ProductEdit = (props: Props) => {
             <div className="grid grid-cols-3 gap-6">
               <div className="col-span-3 sm:col-span-3">
                 <label className="block text-sm font-medium text-gray-700">Image</label>
-                <input type="text" {...register("img")} placeholder=""  className="py-2 px-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"/>
+                <input type="text" {...register("image")} placeholder=""  className="py-2 px-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"/>
               </div>
             </div>
             <div className="grid grid-cols-3 gap-6">

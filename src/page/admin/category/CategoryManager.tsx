@@ -2,6 +2,7 @@ import axios from 'axios'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { RootState } from '../../../app/rootReducer'
 import Table from '../../../components/Table'
 import {deleteCategory} from "../../../features/category/categorySlice"
@@ -12,11 +13,13 @@ const CategoryManager = (props: Props) => {
   const categories = useSelector((state: RootState) => state.category.value)
   const dispatch = useDispatch()
   console.log(categories);
+  const notify = () => toast("Successfully");
 
   const delCategory = async (_id) => {
     try {
       await axios.delete(`http://localhost:8000/api/category/${_id}`)
       dispatch(deleteCategory(_id))
+      notify()
     } catch (error) {
       console.log(error)
     }

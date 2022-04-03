@@ -24,8 +24,12 @@ const user = createSlice({
       state.value = user.user;
       state.token = user.token;
     },
+    removeUser(state) {
+      state.value = null;
+      state.token = "";
+    },
   },
 })
 
-export const { login } = user.actions
+export const { login, removeUser } = user.actions
 export default user.reducer

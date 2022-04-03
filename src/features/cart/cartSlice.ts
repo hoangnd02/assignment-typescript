@@ -19,8 +19,19 @@ const cart = createSlice({
   reducers: {
     addCart(state, action: PayloadAction<any>) {
       const productAdd :any = action.payload
-      console.log(productAdd);
-      state.value.cartItems = state.value.cartItems.map(product => product.product == productAdd.produdct ? productAdd : product);
+      console.log(productAdd)
+      let checkProduct = false
+      state.value.map(product => {
+        if(product.product._id == productAdd.product._id) {
+          product.quantity = productAdd.quantity
+          checkProduct = true
+          console.log(true);
+        } 
+      });
+      if(!checkProduct) {
+        console.log("aaaa")
+        state.value.push(productAdd)
+      }
     },
   },
   extraReducers: (builder) => {

@@ -22,6 +22,7 @@ const category = createSlice({
     },
     editCategory(state, action: PayloadAction<CategoryType>) {
       const categoryEdit :CategoryType = action.payload
+      console.log(categoryEdit.category)
       state.value = state.value.map(category => category._id == categoryEdit._id ? categoryEdit : category);
     },
     deleteCategory(state, action: PayloadAction<any>) {

@@ -7,6 +7,7 @@ import { isAuthenticate } from '../utils/localstorage';
 import { useDispatch, useSelector } from 'react-redux';
 import {addCart} from '../features/cart/cartSlice'
 import { RootState } from '../app/rootReducer';
+import { toast } from 'react-toastify';
 
 type Props = {}
 
@@ -22,6 +23,8 @@ const ProductPage = (props: Props) => {
   const { id } = useParams()
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const notify = () => toast("Successfully");
+
   
   const cart = useSelector((state: RootState) => state.cart.value.cartItems)
 
@@ -50,8 +53,9 @@ const ProductPage = (props: Props) => {
           product,
           quantity: count
         }
+        // await axios.post(`http://localhost:8000/api/cart/${user._id}`, newCart)
         dispatch(addCart(newCart))
-        console.log(cart)
+        notify()
       } else {
         navigate("/signin")
       }

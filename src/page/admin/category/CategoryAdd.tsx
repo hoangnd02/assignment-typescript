@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { addCategory } from '../../../features/category/categorySlice';
 import { CategoryType } from '../../../types/Category';
 
@@ -11,11 +12,13 @@ const CategoryAdd = (props: props) => {
   const { register, handleSubmit, formState: {errors} } = useForm<CategoryType>()
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const notify = () => toast("Successfully");
 
   const onSubmit: SubmitHandler<CategoryType> = async (dataInput) => {
     try {
       const {data} = await axios.post("http://localhost:8000/api/category", dataInput)
       dispatch(addCategory(data));
+      notify()
       navigate("/admin/category");
     } catch (error) {
       console.log(error)

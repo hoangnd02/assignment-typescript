@@ -24,6 +24,8 @@ import CategoryAdd from './page/admin/category/CategoryAdd';
 import { getCart } from './features/cart/cartSlice';
 import SearchPage from './page/SearchPage';
 import Dashboard from './page/admin';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 function App() {
   const productsApi = useSelector((state: RootState) => state.products.value)
@@ -56,6 +58,7 @@ function App() {
 
   return (
     <div className="App">
+      <ToastContainer />
       <main>
         <Routes>
           <Route path="/" element={<WebsiteLayout />}>

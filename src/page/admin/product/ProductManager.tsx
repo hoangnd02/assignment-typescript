@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { RootState } from '../../../app/rootReducer';
 import Table from '../../../components/Table';
 import { deleteProduct } from '../../../features/product/productSlice';
@@ -14,6 +15,7 @@ type ProductManagerProps = {
 const ProductManager = (props: ProductManagerProps) => {
   const dispatch = useDispatch()
   const products = useSelector((state: RootState) => state.products.value)
+  const notify = () => toast("Successfully");
 
   const onHandleDelete = async (_id: number) => {
     try {
@@ -26,6 +28,7 @@ const ProductManager = (props: ProductManagerProps) => {
             }
           }
         );
+        notify()
         dispatch(deleteProduct(_id))
       }
     }

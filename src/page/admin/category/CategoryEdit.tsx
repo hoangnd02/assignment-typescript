@@ -1,8 +1,9 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { editCategory } from '../../../features/category/categorySlice';
 import { CategoryType } from '../../../types/Category';
 
@@ -14,12 +15,13 @@ const CategoryEdit = (props: Props) => {
   const navigate = useNavigate()
   const {id} = useParams()
   const dispatch = useDispatch()
+  const notify = () => toast("Successfully");
 
   const onSubmit: SubmitHandler<CategoryType> = async (dataInput) => {
     try {
       const {data} = await axios.patch(`http://localhost:8000/api/category/${id}`, dataInput)
-      console.log(data)
-      dispatch(editCategory(data));
+      dispatch(editCategory(data.category));
+      notify()
       navigate("/admin/category");
     } catch (error) {
       console.log(error)
