@@ -19,13 +19,13 @@ const cart = createSlice({
   reducers: {
     addCart(state, action: PayloadAction<any>) {
       const productAdd :any = action.payload
-      console.log(productAdd)
+      // console.log(productAdd)
       let checkProduct = false
       state.value.map(product => {
         if(product.product._id == productAdd.product._id) {
           product.quantity = productAdd.quantity
           checkProduct = true
-          console.log(true);
+          // console.log(true);
         } 
       });
       if(!checkProduct) {
@@ -33,6 +33,10 @@ const cart = createSlice({
         state.value.push(productAdd)
       }
     },
+    deleteCart(state, action: PayloadAction<any>) {
+      const idProduct :any = action.payload
+      state.value = state.value.filter(product => product.product._id != idProduct);
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(getCart.pending, (state) => {
@@ -45,7 +49,7 @@ const cart = createSlice({
   }
 })
 
-export const { addCart } = cart.actions
+export const { addCart, deleteCart } = cart.actions
 export default cart.reducer
 
 export const getCart = createAsyncThunk(
