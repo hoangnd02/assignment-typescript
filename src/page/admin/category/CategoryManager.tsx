@@ -15,7 +15,7 @@ const CategoryManager = (props: Props) => {
   console.log(categories);
   const notify = () => toast("Successfully");
 
-  const delCategory = async (_id) => {
+  const delCategory = async (_id: any) => {
     try {
       await axios.delete(`http://localhost:8000/api/category/${_id}`)
       dispatch(deleteCategory(_id))
@@ -38,7 +38,7 @@ const CategoryManager = (props: Props) => {
             </button>
           </Link>  
         </div>
-        <Table onDelete={delCategory} data={categories} />
+        <Table type="category" onDelete={delCategory} data={categories} />
       </div>
     </div>
   )

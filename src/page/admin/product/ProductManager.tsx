@@ -50,7 +50,7 @@ const ProductManager = (props: ProductManagerProps) => {
             </button>
           </Link>  
         </div>
-        <Table onDelete={onHandleDelete} data={products} />
+        <Table type="product" onDelete={onHandleDelete} data={products} />
       </div>
     </div>
   )

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { RootState } from '../../app/rootReducer'
 import { useNavigate } from 'react-router-dom';
 import { removeUser } from "../../features/user/userSlice"
+import { setDefaultValueCartStore } from '../../features/cart/cartSlice';
 
 type Props = {}
 
@@ -25,6 +26,7 @@ const Header = (props: Props) => {
   const logout = () => {
     localStorage.removeItem("user");
     dispatch(removeUser())
+    dispatch(setDefaultValueCartStore())
   }
 
   return (

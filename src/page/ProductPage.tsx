@@ -53,7 +53,7 @@ const ProductPage = (props: Props) => {
           product,
           quantity: count
         }
-        // await axios.post(`http://localhost:8000/api/cart/${user._id}`, newCart)
+        await axios.post(`http://localhost:8000/api/cart/${user._id}`, newCart)
         dispatch(addCart(newCart))
         notify()
       } else {

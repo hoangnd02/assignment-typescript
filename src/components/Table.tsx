@@ -2,6 +2,7 @@ import React from 'react'
 import Row from './Row';
 
 type Props = {
+  type: string;
   data: any[],
   onDelete: (id: number) => void
 }
@@ -33,7 +34,7 @@ const Table = (props: Props) => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {props.data.map((dataItem, index) => <Row onDelete={props.onDelete} columns={keys} key={index} data={dataItem}/>)}
+                {props.data.map((dataItem, index) => <Row type={props.type} onDelete={props.onDelete} columns={keys} key={index} data={dataItem}/>)}
               </tbody>
               </table>
           </div>

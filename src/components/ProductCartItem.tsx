@@ -20,7 +20,7 @@ const ProductCartItem = ({product}: Props) => {
     const newProduct = {...product}
     newProduct.quantity = count
     console.log(newProduct)
-    dispatch(addCart(newProduct)) 
+    dispatch(addCart(newProduct))
   }
 
   const upQuantity = () => {
@@ -28,7 +28,7 @@ const ProductCartItem = ({product}: Props) => {
     const newProduct = {...product}
     newProduct.quantity = count
     console.log(newProduct)
-    dispatch(addCart(newProduct)) 
+    dispatch(addCart(newProduct))
   }
 
   const remove = (id: number) => {

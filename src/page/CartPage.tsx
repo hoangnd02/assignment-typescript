@@ -26,7 +26,6 @@ const CartPage = (props: Props) => {
     (previousValue, currentValue) => previousValue + currentValue.product.price * currentValue.quantity
   , 0)
 
-  console.log(products);
   return (
     <div className="container mx-auto mt-10">
     <div className="flex my-10">

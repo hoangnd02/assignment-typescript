@@ -8,10 +8,13 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../app/rootReducer';
 import ListProduct from '../components/ListProduct';
 
-type Props = {}
+type Props = {
+  products: ProductType[]
+}
 
 const Homepage = (props: Props) => {
-  const products: ProductType[] = useSelector((state: RootState) => state.products.value)
+  // const products: ProductType[] = useSelector((state: RootState) => state.products.value)
+  const [product, setProduct] = useState<ProductType[]>([])
   const [newProduct, setNewProduct] = useState<ProductType[]>([])
 
   useEffect(() => {
@@ -20,7 +23,19 @@ const Homepage = (props: Props) => {
       setNewProduct(data)
     }
     getNewProduct()
+    const getProductPage1 = async () => {
+      const {data} = await axios.get(`http://localhost:8000/api/products?page=1`)
+      setProduct(data)
+      console.log(product);
+    }
+    getProductPage1()
   }, [])
+
+  //call api next page
+  const getNextPage = async (pageNumber: number) => {
+    const {data} = await axios.get(`http://localhost:8000/api/products?page=${pageNumber}`) 
+    setProduct(data)
+  }
 
   return (
     <div className="bg-[#f1f3f6] py-6">
@@ -44,7 +59,7 @@ const Homepage = (props: Props) => {
         <h2 className="text-2xl border-b-[1px] mx-[-16px] px-4 py-4 font-bold text-gray-900">
           All product
         </h2>
-        <ListProduct products={products} />
+        <ListProduct products={product} />
         <div className="grid mt-2 px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 sm:grid-cols-9 dark:text-gray-400">
           <span className="flex items-center col-span-3">
             Showing 1-2 of 2
@@ -62,10 +77,10 @@ const Homepage = (props: Props) => {
                   </button>
                 </li>
                 <li>
-                  <button id="page-count" className="px-3 py-1 w-[50px] hover:bg-gray-200 rounded-md focus:outline-none focus:shadow-outline-purple">1</button>
+                  <button onClick={() => getNextPage(1)} className="px-3 py-1 w-[50px] hover:bg-gray-200 rounded-md focus:outline-none focus:shadow-outline-purple">1</button>
                 </li>
                 <li>
-                  <button id="page-count" className="px-3 py-1 w-[50px] hover:bg-gray-200 rounded-md focus:outline-none focus:shadow-outline-purple">2</button>
+                  <button onClick={() => getNextPage(2)} className="px-3 py-1 w-[50px] hover:bg-gray-200 rounded-md focus:outline-none focus:shadow-outline-purple">2</button>
                 </li>
                 <li>
                   <button className="px-3 py-1 w-[50px] rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple">

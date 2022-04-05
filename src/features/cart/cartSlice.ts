@@ -29,13 +29,15 @@ const cart = createSlice({
         } 
       });
       if(!checkProduct) {
-        console.log("aaaa")
         state.value.push(productAdd)
       }
     },
     deleteCart(state, action: PayloadAction<any>) {
       const idProduct :any = action.payload
       state.value = state.value.filter(product => product.product._id != idProduct);
+    },
+    setDefaultValueCartStore(state) {
+      state.value = []
     }
   },
   extraReducers: (builder) => {
@@ -49,7 +51,7 @@ const cart = createSlice({
   }
 })
 
-export const { addCart, deleteCart } = cart.actions
+export const { addCart, deleteCart, setDefaultValueCartStore } = cart.actions
 export default cart.reducer
 
 export const getCart = createAsyncThunk(
@@ -64,3 +66,4 @@ export const getCart = createAsyncThunk(
     return data 
   }
 )
+

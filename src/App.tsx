@@ -32,6 +32,8 @@ function App() {
   const [ products, setProducts ] = useState<ProductType[]>(productsApi)
   const dispatch = useDispatch()
 
+  console.log("hoang")
+
   useEffect(() => {
     dispatch(getProducts())
     dispatch(getCategories())
@@ -66,7 +68,7 @@ function App() {
             <Route path="signup" element={<Signup />} />
             <Route path="search" element={<SearchPage />} />
             <Route path="cart" element={<CartPage />} />
-            <Route index element={<Homepage />} />
+            <Route index element={<Homepage products={products} />} />
             <Route path="product/:id" element={<ProductPage />} />
           </Route>
           <Route path="admin" element={<PrivateRoute><AdminLayout /></PrivateRoute>}>
