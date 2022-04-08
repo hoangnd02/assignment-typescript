@@ -7,6 +7,14 @@ import { getCart, setDefaultValueCartStore } from '../features/cart/cartSlice'
 import { login } from '../features/user/userSlice'
 import { authenticated } from '../utils/localstorage'
 
+import {
+	getAuth,
+	signInWithEmailAndPassword,
+	signInWithPopup,
+	GoogleAuthProvider,
+} from "firebase/auth";
+import { Link } from 'react-router-dom'
+
 type Props = {}
 
 type SigninType = {
@@ -20,6 +28,9 @@ const Signin = (props: Props) => {
   const dispatch = useDispatch()
   const notify = (mess: any) => toast(mess);
 
+  const auth = getAuth();
+	const googleAuthProvider = new GoogleAuthProvider();
+
   const onSubmit: SubmitHandler<SigninType> = async (dataInput) => {
     try {
       const {data} = await axios.post("http://localhost:8000/api/signin", dataInput)
@@ -32,6 +43,26 @@ const Signin = (props: Props) => {
       console.log(error)
     }
   } 
+
+  const googleLogin = async () => {
+		try {
+			const { user } = await signInWithPopup(auth, googleAuthProvider);
+			console.log("toekn google", user);
+      await axios.post("http://localhost:8000/api/signingg", user)
+      const loginUser = {
+        token: user.accessToken,
+        user: {
+          email: user.email,
+          role: 0,
+          _id: "0tQLti0NiMY0YznYD709yMBGKhh1",
+        }
+      }
+      dispatch(login(loginUser))
+			navigate("/")
+		} catch (error) {
+      console.log(error);
+    }
+	};
   
   return (
     <div className="min-h-full bg-[url('https://random.imagecdn.app/1400/800')] flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8">
@@ -83,6 +114,12 @@ const Signin = (props: Props) => {
             >
               Sign in
             </button>
+            <button
+              type="button"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              onClick={googleLogin}>
+              Login with Google
+            </button>
           </div>
             <div className="text-sm text-center">
               <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
@@ -94,6 +131,16 @@ const Signin = (props: Props) => {
       </div>
     </div>
   )
+
+  const formSignin = () => (
+    <form>
+      <br />
+        Login with Email/Password
+      <br /> 
+      
+      <br />
+    </form>
+	);
 }
 
 export default Signin

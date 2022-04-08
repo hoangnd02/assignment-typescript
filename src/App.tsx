@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Homepage from './page/Homepage';
 import ProductPage from './page/ProductPage';
@@ -26,13 +26,17 @@ import SearchPage from './page/SearchPage';
 import Dashboard from './page/admin';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
+import { onAuthStateChanged } from '@firebase/auth';
+
+import { auth } from './firebase/firebase.config';
+import { login } from './features/user/userSlice';
+import { UserType } from './types/User';
+
 
 function App() {
   const productsApi = useSelector((state: RootState) => state.products.value)
   const [ products, setProducts ] = useState<ProductType[]>(productsApi)
   const dispatch = useDispatch()
-
-  console.log("hoang")
 
   useEffect(() => {
     dispatch(getProducts())
@@ -57,6 +61,26 @@ function App() {
       console.log(error)
     }
   }
+
+  useEffect(() => {
+    const unsubcribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const { token } = await user.getIdTokenResult();
+        console.log(user)
+        const loginUser = {
+          token,
+          user: {
+            email: user.email,
+            role: 0,
+            _id: "0tQLti0NiMY0YznYD709yMBGKhh1",
+          }
+        }
+        dispatch(login(loginUser))
+      }
+    });
+    return () => unsubcribe();
+  })
+
 
   return (
     <div className="App">

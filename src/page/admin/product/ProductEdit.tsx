@@ -6,6 +6,7 @@ import { ProductType } from '../../../types/Product';
 import { editProduct } from '../../../features/product/productSlice'
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { isAuthenticate } from '../../../utils/localstorage';
  
 type Props = {}
 
@@ -19,10 +20,13 @@ const ProductEdit = (props: Props) => {
 
   const onSubmit: SubmitHandler<ProductType> = async (dataInput) => {
     try {
-      const { data } = await axios.patch(`http://localhost:8000/api/product/${id}`, dataInput)
-      dispatch(editProduct(data))
-      notify()
-      navigate("/admin/product");
+      if(localStorage.getItem('user')) {
+        const {token, user} = isAuthenticate()
+        const { data } = await axios.patch(`http://localhost:8000/api/product/${id}/${user._id}`, dataInput)
+        dispatch(editProduct(data))
+        notify()
+        navigate("/admin/product");
+      }
     } catch (error) {
       console.log(error)
     }

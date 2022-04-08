@@ -20,9 +20,9 @@ const ProductManager = (props: ProductManagerProps) => {
   const onHandleDelete = async (_id: number) => {
     try {
       if(localStorage.getItem('user')) {
-        const { token } = isAuthenticate()
+        const { token, user } = isAuthenticate()
         await axios.delete(
-          `http://localhost:8000/api/product/${_id}`, {
+          `http://localhost:8000/api/product/${_id}/${user._id}`, {
             headers: {
               "Authorization": `Bearer ${token}`
             }
