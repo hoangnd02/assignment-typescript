@@ -46,7 +46,7 @@ const Signin = (props: Props) => {
 
   const googleLogin = async () => {
 		try {
-			const { user } = await signInWithPopup(auth, googleAuthProvider);
+			const { user }: any = await signInWithPopup(auth, googleAuthProvider);
 			console.log("toekn google", user);
       await axios.post("http://localhost:8000/api/signingg", user)
       const loginUser = {

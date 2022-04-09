@@ -32,7 +32,6 @@ import { auth } from './firebase/firebase.config';
 import { login } from './features/user/userSlice';
 import { UserType } from './types/User';
 
-
 function App() {
   const productsApi = useSelector((state: RootState) => state.products.value)
   const [ products, setProducts ] = useState<ProductType[]>(productsApi)

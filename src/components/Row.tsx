@@ -5,7 +5,7 @@ import Column from './Column'
 type Props = {
   type: string,
   columns: any[],
-  data: any[],
+  data: any,
   onDelete: (id: number) => void
 }
 
