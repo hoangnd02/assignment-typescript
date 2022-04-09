@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 type Props = {}
 
 const ProductPage = (props: Props) => {
-  const [ product, setProduct ] = useState<ProductType>({
+  const [ product, setProduct ] = useState<any>({
     name: "",
     category: "",
     price: 0,
@@ -24,10 +24,7 @@ const ProductPage = (props: Props) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const notify = () => toast("Successfully");
-
   
-  const cart = useSelector((state: RootState) => state.cart.value.cartItems)
-
   useEffect(() => {
     const getProduct = async () => {
       const {data} = await axios.get(`http://localhost:8000/api/product/${id}`)

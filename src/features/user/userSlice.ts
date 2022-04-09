@@ -19,7 +19,7 @@ const user = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    login(state, action: PayloadAction<UserType>) {
+    login(state, action: PayloadAction<any>) {
       const user = action.payload;
       state.value = user.user;
       state.token = user.token;

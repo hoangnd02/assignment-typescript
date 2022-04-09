@@ -41,13 +41,13 @@ const ProductCartItem = ({product}: Props) => {
       <div className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
           <div className="flex w-2/5">
           <div className="w-24">
-            <img src={product.product.image}/>
+            <img src={product.product.img}/>
           </div>
           <div className="flex flex-col justify-center ml-4 flex-grow">
             <span className="text-gray-600 font-bold text-base text-center justify-center">
               {product.product.name}
             </span>
-          </div>
+          </div>d
           </div>
           <div id="action" className="flex justify-center w-1/5">
           <svg onClick={() => downQuantity()} className="fill-current text-gray-600 w-3" viewBox="0 0 448 512"><path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" /></svg>
