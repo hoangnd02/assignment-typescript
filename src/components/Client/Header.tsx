@@ -5,6 +5,7 @@ import { RootState } from '../../app/rootReducer'
 import { useNavigate } from 'react-router-dom';
 import { removeUser } from "../../features/user/userSlice"
 import { setDefaultValueCartStore } from '../../features/cart/cartSlice';
+import { getAuth, signOut } from "firebase/auth";
 
 type Props = {}
 
@@ -27,6 +28,8 @@ const Header = (props: Props) => {
     localStorage.removeItem("user");
     dispatch(removeUser())
     dispatch(setDefaultValueCartStore())
+    const auth = getAuth();
+    signOut(auth)
   }
 
   return (

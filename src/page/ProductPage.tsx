@@ -66,7 +66,7 @@ const ProductPage = (props: Props) => {
       <section className="mt-2 shadow border-[1px] text-gray-700 body-font overflow-hidden bg-white">
         <div className="container px-5 py-16 mx-auto">
           <div className="lg:w-4/5 mx-auto flex justify-around flex-wrap">
-            <img className="lg:w-1/3 w-full object-cover object-center rounded border border-gray-200" src={product?.image}/>
+            <img className="lg:w-1/3 w-full object-cover object-center rounded border border-gray-200" src={product?.img}/>
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{product?.name}</h1>
               <div className="flex mb-4"></div>

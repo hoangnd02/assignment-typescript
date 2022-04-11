@@ -16,6 +16,13 @@ const products = createSlice({
   name: 'product',
   initialState,
   reducers: {
+    fetchProductList: (state) => {
+      state.loading = true
+    },
+    fetchProductSuccess: (state, action: PayloadAction<ProductType[]>) => {
+      state.loading = false
+      state.value = action.payload
+    },
     addProduct(state, action: PayloadAction<ProductType>) {
       const product :ProductType = action.payload
       state.value.push(product);
@@ -40,7 +47,7 @@ const products = createSlice({
 }
 })
 
-export const { addProduct, editProduct, deleteProduct } = products.actions
+export const { fetchProductList, fetchProductSuccess, addProduct, editProduct, deleteProduct } = products.actions
 export default products.reducer
 
 export const getProducts = createAsyncThunk(

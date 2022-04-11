@@ -15,7 +15,7 @@ import { isAuthenticate } from './utils/localstorage';
 import CartPage from './page/CartPage';
 import ProductManager from './page/admin/product/ProductManager';
 import CategoryManager from './page/admin/category/CategoryManager';
-import { getProducts } from './features/product/productSlice';
+import { fetchProductList, getProducts } from './features/product/productSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './app/rootReducer';
 import { getCategories } from './features/category/categorySlice';
@@ -38,9 +38,10 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getProducts())
+    // dispatch(getProducts())
     dispatch(getCategories())
     dispatch(getCart())
+    dispatch(fetchProductList())
   }, [])
   
   const onHandleAdd = async (product: ProductType) => {

@@ -1,3 +1,4 @@
+import createSagaMiddleware from '@redux-saga/core';
 import { configureStore, Action } from '@reduxjs/toolkit'
 import { ThunkAction } from 'redux-thunk'
 import {
@@ -13,6 +14,9 @@ import {
 
 import storage from 'redux-persist/lib/storage'
 import rootReducer, { RootState } from './rootReducer'
+import rootSaga from './rootSaga';
+
+const sagaMiddleware = createSagaMiddleware();
 
 const persistConfig = {
   key: 'root',
@@ -27,8 +31,10 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(sagaMiddleware),
 })
+
+sagaMiddleware.run(rootSaga);
 
 export default persistStore(store)
 

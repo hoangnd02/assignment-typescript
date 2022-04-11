@@ -26,7 +26,6 @@ const Homepage = (props: Props) => {
     const getProductPage1 = async () => {
       const {data} = await axios.get(`http://localhost:8000/api/products?page=1`)
       setProduct(data)
-      console.log(product);
     }
     getProductPage1()
   }, [])

@@ -22,7 +22,11 @@ const ProductEdit = (props: Props) => {
     try {
       if(localStorage.getItem('user')) {
         const {token, user} = isAuthenticate()
-        const { data } = await axios.patch(`http://localhost:8000/api/product/${id}/${user._id}`, dataInput)
+        const { data } = await axios.patch(`http://localhost:8000/api/product/${id}/${user._id}`, dataInput, {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        })
         dispatch(editProduct(data))
         notify()
         navigate("/admin/product");

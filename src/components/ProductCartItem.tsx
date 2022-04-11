@@ -47,7 +47,7 @@ const ProductCartItem = ({product}: Props) => {
             <span className="text-gray-600 font-bold text-base text-center justify-center">
               {product.product.name}
             </span>
-          </div>d
+          </div>
           </div>
           <div id="action" className="flex justify-center w-1/5">
           <svg onClick={() => downQuantity()} className="fill-current text-gray-600 w-3" viewBox="0 0 448 512"><path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" /></svg>

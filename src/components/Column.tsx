@@ -18,7 +18,7 @@ const Column = (props: Props) => {
         </td>
       }
   
-      case "image": {
+      case "img": {
         return <td className="px-6 py-4 whitespace-nowrap">
           <img className="w-[120px]" src={props.value}/>
         </td>
